@@ -1,40 +1,41 @@
 package com.backEndJavaSpring.Chatop_app.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
 
     @Id
-    @Getter
-    @Setter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Getter
-    @Setter
     private String name;
-    @Getter
-    @Setter
     private String email;
-    @Getter
-    @Setter
     private String password;
-    @Getter
-    @Setter
-    private Date created_at;
-    @Getter
-    @Setter
-    private Date updated_at;
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime created_at;
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime updated_at;
 
-    public User() {}
-    public User(Long id, String name, String email, String password) {}
 
+    @PrePersist
+    protected void onCreate() {
+        created_at = LocalDateTime.now();
+        updated_at = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updated_at = LocalDateTime.now();
+    }
 
 }

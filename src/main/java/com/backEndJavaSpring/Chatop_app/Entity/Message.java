@@ -1,41 +1,41 @@
 package com.backEndJavaSpring.Chatop_app.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Message {
     @Id
     @GeneratedValue
-    @Getter
-    @Setter
     private Long id;
-    @Getter
-    @Setter
     @ManyToOne
     private Rental rental;
-    @Getter
-    @Setter
     @ManyToOne
     private User user;
-    @Getter
-    @Setter
     private String message;
-    @Getter
-    @Setter
-    private Date created_at;
-    @Getter
-    @Setter
-    private Date updated_at;
+    private LocalDateTime created_at;
+    private LocalDateTime updated_at;
+
+    @PrePersist
+    protected void onCreate() {
+        created_at = LocalDateTime.now();
+        updated_at = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updated_at = LocalDateTime.now();
+    }
 
 
-    public Message() {}
-    public Message(String message) {}
 
 }
