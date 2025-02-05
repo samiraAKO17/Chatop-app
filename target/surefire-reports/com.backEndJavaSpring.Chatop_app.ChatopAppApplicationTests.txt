@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.backEndJavaSpring.Chatop_app.ChatopAppApplicationTests
--------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 12.16 s -- in com.backEndJavaSpring.Chatop_app.ChatopAppApplicationTests
