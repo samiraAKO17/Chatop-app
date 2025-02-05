@@ -1,5 +1,6 @@
 package com.backEndJavaSpring.Chatop_app.Controller;
 
+import com.backEndJavaSpring.Chatop_app.Dto.MessageDto;
 import com.backEndJavaSpring.Chatop_app.Entity.Message;
 import com.backEndJavaSpring.Chatop_app.Service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ public class MessageController {
     private MessageService s;
 
     @PostMapping("Messages")
-    public Message createUser(@RequestBody Message message) {
+    public MessageDto createUser(@RequestBody MessageDto message) {
         System.out.print(message.toString());
         s.addMessage(message);
         return message;

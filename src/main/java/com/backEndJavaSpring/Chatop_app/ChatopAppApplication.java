@@ -1,6 +1,8 @@
 package com.backEndJavaSpring.Chatop_app;
 
-import com.backEndJavaSpring.Chatop_app.Entity.User;
+import com.backEndJavaSpring.Chatop_app.Dto.MessageDto;
+import com.backEndJavaSpring.Chatop_app.Dto.RentalDto;
+import com.backEndJavaSpring.Chatop_app.Dto.UserDto;
 import com.backEndJavaSpring.Chatop_app.Service.MessageService;
 import com.backEndJavaSpring.Chatop_app.Service.RentalService;
 import com.backEndJavaSpring.Chatop_app.Service.UserService;
@@ -8,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import java.time.LocalDateTime;
 
 @SpringBootApplication
 public class ChatopAppApplication implements CommandLineRunner {
@@ -30,13 +30,35 @@ public class ChatopAppApplication implements CommandLineRunner {
 		//readUser();
 		//updateUser();
 		//rental();
+		//message();
+	}
+
+	private void message() {
+		MessageDto message = new MessageDto();
+		message.setMessage("Hello I'm interested in ...");
+		UserDto user = new UserDto();
+		user= userService.getUserById(2L);
+		message.setUser(user);
+		message.setRental(rentalService.getRentalById(1L));
+		messageService.addMessage(message);
+
 	}
 
 	private void rental() {
+		RentalDto rental = new RentalDto();
+		rental.setName("T1 Boulogne");
+		UserDto user = new UserDto();
+		user= userService.getUserById(1L);
+		rental.setOwner(user);
+		rental.setPrice(750f);
+		rental.setSurface(24f);
+		rental.setDescription("T1 Boulogne");
+		rentalService.addRental(rental);
 	}
 
+
 	private void updateUser() {
-		User user = new User();
+		UserDto user = new UserDto();
 		user= userService.getUserById(1L);
 		user.setName("Samira");
 		user.setEmail("samira@gmail.com");
@@ -45,18 +67,16 @@ public class ChatopAppApplication implements CommandLineRunner {
 	}
 
 	private void readUser() {
-		User user = new User();
+		UserDto user = new UserDto();
 		user= userService.getUserById(1L);
 		System.out.println("uuuuuuuuuuuuuuser"+user.getEmail());
 	}
 
 	private void user() {
-		User user = new User();
+		UserDto user = new UserDto();
 		user.setName("John");
 		user.setEmail("john@gmail.com");
 		user.setPassword("123456");
-		//LocalDateTime myObj = LocalDateTime.now(); // Create a date object
-		//user.setCreated_at(myObj);
         userService.addUser(user);
 	}
 }
