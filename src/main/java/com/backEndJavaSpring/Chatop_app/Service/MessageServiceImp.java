@@ -25,13 +25,13 @@ public class MessageServiceImp implements MessageService {
     }
 
     @Override
-    public void addMessage(MessageDto message) {
-        messageRepository.save(messageMapper.toEntity(message));
+    public MessageDto addMessage(MessageDto message) {
+        return messageMapper.toDto(messageRepository.save(messageMapper.toEntity(message)));
     }
 
     @Override
-    public void updateMessage(MessageDto message) {
-        messageRepository.save(messageMapper.toEntity(message));
+    public MessageDto updateMessage(MessageDto message) {
+       return messageMapper.toDto(messageRepository.save(messageMapper.toEntity(message)));
     }
 
     @Override

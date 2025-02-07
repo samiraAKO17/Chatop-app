@@ -25,14 +25,14 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public void addUser(UserDto user) {
-        userRepository.save(userMapper.toEntity(user));
+    public UserDto addUser(UserDto user) {
+        return userMapper.toDto(userRepository.save(userMapper.toEntity(user)));
 
     }
 
     @Override
-    public void updateUser(UserDto user) {
-        userRepository.save(userMapper.toEntity(user));
+    public UserDto updateUser(UserDto user) {
+        return userMapper.toDto(userRepository.save(userMapper.toEntity(user)));
     }
 
     @Override

@@ -13,6 +13,9 @@ public class RentalMapper {
         dto.setId(rental.getId());
         dto.setName(rental.getName());
         dto.setOwner(userMapper.toDto(rental.getOwner()));
+        dto.setPrice(rental.getPrice());
+        dto.setSurface(rental.getSurface());
+        dto.setPicture(rental.getPicture());
         dto.setDescription(rental.getDescription());
         dto.setCreated_at(rental.getCreated_at());
         dto.setUpdated_at(rental.getUpdated_at());
@@ -24,6 +27,8 @@ public class RentalMapper {
         rental.setId(dto.getId());
         rental.setName(dto.getName());
         rental.setOwner(userMapper.toEntity(dto.getOwner()));
+        rental.setPrice(dto.getPrice());
+        rental.setSurface(dto.getSurface());
         rental.setDescription(dto.getDescription());
         rental.setCreated_at(dto.getCreated_at());
         rental.setUpdated_at(dto.getUpdated_at());

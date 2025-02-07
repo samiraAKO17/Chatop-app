@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface RentalService {
     List<RentalDto> rentals();
-    void addRental (RentalDto rental);
-    void updateRental (RentalDto rental);
+    RentalDto addRental (RentalDto rental);
+    RentalDto updateRental (RentalDto rental);
     void deleteRental (RentalDto rental);
     RentalDto getRentalById(Long id);
 }

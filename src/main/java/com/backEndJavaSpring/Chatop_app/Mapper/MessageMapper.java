@@ -21,8 +21,8 @@ public class MessageMapper {
 
     public Message toEntity(MessageDto dto) {
         Message message = new Message();
-        message.setId(message.getId());
-        message.setMessage(message.getMessage());
+        message.setId(dto.getId());
+        message.setMessage(dto.getMessage());
         message.setUser(userMapper.toEntity(dto.getUser()));
         message.setRental(rentalMapper.toEntity(dto.getRental()));
         message.setCreated_at(dto.getCreated_at());

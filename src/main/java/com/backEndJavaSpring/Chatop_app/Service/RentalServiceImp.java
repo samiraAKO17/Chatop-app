@@ -31,7 +31,16 @@ public class RentalServiceImp implements RentalService {
 
     @Override
     public void updateRental(RentalDto rental) {
-        rentalRepository.save(rentalMapper.toEntity(rental));
+        Rental rentalEntity = rentalMapper.toEntity(rental);
+        Rental rentalToUpdate = rentalRepository.findById(rentalEntity.getId()).get();
+        rentalToUpdate.setName(rentalEntity.getName());
+        rentalToUpdate.setOwner(rentalEntity.getOwner());
+        rentalToUpdate.setPrice(rentalEntity.getPrice());
+        rentalToUpdate.setSurface(rentalEntity.getSurface());
+        rentalToUpdate.setDescription(rentalEntity.getDescription());
+        rentalToUpdate.setCreated_at(rentalEntity.getCreated_at());
+        rentalToUpdate.setUpdated_at(rentalEntity.getUpdated_at());
+        rentalRepository.save(rentalToUpdate);
     }
 
     @Override

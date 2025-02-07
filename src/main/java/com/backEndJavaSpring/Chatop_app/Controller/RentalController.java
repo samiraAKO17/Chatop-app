@@ -16,10 +16,9 @@ public class RentalController {
     @PostMapping("Rentals")
     public RentalDto createUser(@RequestBody RentalDto rental) {
         System.out.print(rental.toString());
-        s.addRental(rental);
-        return rental;
+        return s.addRental(rental);
     }
-    @GetMapping("Rental")
+    @GetMapping("Rentals")
     public List<RentalDto> getAll(){
         return s.rentals();
     }
@@ -27,8 +26,7 @@ public class RentalController {
     public RentalDto UpdatetRental(@RequestBody RentalDto rental, @PathVariable Long id) {
         System.out.print(rental.toString());
         rental.setId(id);
-        s.updateRental(rental);
-        return rental;
+        return s.updateRental(rental);
     }
     @GetMapping("Rentals/{id}")
     public RentalDto getRental( @PathVariable Long id) {

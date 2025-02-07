@@ -22,8 +22,8 @@ public class UserController {
     public UserDto createUser(@RequestBody UserDto user) {
         System.out.print(user.toString());
        // user.setPassword(encoder.encode(user.getPassword()));
-        s.addUser(user);
-        return user;
+       ;
+        return  s.addUser(user);
     }
 
     @PostMapping("auth/login")
