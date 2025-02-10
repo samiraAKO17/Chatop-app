@@ -6,10 +6,15 @@ import com.backEndJavaSpring.Chatop_app.Dto.UserDto;
 import com.backEndJavaSpring.Chatop_app.Service.MessageService;
 import com.backEndJavaSpring.Chatop_app.Service.RentalService;
 import com.backEndJavaSpring.Chatop_app.Service.UserService;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import javax.crypto.SecretKey;
+import java.util.Base64;
 
 @SpringBootApplication
 public class ChatopAppApplication implements CommandLineRunner {
@@ -19,6 +24,8 @@ public class ChatopAppApplication implements CommandLineRunner {
 	MessageService messageService;
 	@Autowired
 	RentalService rentalService;
+	@Autowired
+	BCryptPasswordEncoder encoder;
 
 	public static void main(String[] args) {
 		SpringApplication.run(ChatopAppApplication.class, args);
@@ -31,6 +38,22 @@ public class ChatopAppApplication implements CommandLineRunner {
 		//updateUser();
 		//rental();
 		//message();
+		//updateUserPassword();
+		//JwtSecretKeyGenerator();
+	}
+
+	private void JwtSecretKeyGenerator() {
+		SecretKey key = Keys.secretKeyFor(io.jsonwebtoken.SignatureAlgorithm.HS256);
+		String base64Key = Base64.getEncoder().encodeToString(key.getEncoded());
+		System.out.println("Clé secrète générée (Base64) : " + base64Key);
+	}
+
+	private void updateUserPassword() {
+		UserDto user = new UserDto();
+		user= userService.getUserById(1L);
+		user.setPassword(encoder.encode(user.getPassword()));
+		userService.updateUser(user);
+		readUser();
 	}
 
 	private void message() {

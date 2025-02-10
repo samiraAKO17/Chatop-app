@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -53,6 +54,10 @@ public class UserServiceImp implements UserService {
 
     @Override
     public UserDto getUserByEmail(String email) {
-        return userMapper.toDto(userRepository.findByEmail(email));
+        UserDto dto = null;
+        Optional<User> user =userRepository.findByEmail(email);
+        if(user.isPresent())
+        dto = userMapper.toDto(user.get());
+        return dto;
     }
 }

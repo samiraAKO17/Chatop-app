@@ -25,12 +25,12 @@ public class RentalServiceImp implements RentalService {
     }
 
     @Override
-    public void addRental(RentalDto rental) {
-        rentalRepository.save(rentalMapper.toEntity(rental));
+    public RentalDto addRental(RentalDto rental) {
+        return rentalMapper.toDto(rentalRepository.save(rentalMapper.toEntity(rental)));
     }
 
     @Override
-    public void updateRental(RentalDto rental) {
+    public RentalDto updateRental(RentalDto rental) {
         Rental rentalEntity = rentalMapper.toEntity(rental);
         Rental rentalToUpdate = rentalRepository.findById(rentalEntity.getId()).get();
         rentalToUpdate.setName(rentalEntity.getName());
@@ -40,7 +40,7 @@ public class RentalServiceImp implements RentalService {
         rentalToUpdate.setDescription(rentalEntity.getDescription());
         rentalToUpdate.setCreated_at(rentalEntity.getCreated_at());
         rentalToUpdate.setUpdated_at(rentalEntity.getUpdated_at());
-        rentalRepository.save(rentalToUpdate);
+        return rentalMapper.toDto(rentalRepository.save(rentalToUpdate));
     }
 
     @Override
