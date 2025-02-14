@@ -1,5 +1,7 @@
 package com.backEndJavaSpring.Chatop_app.Controller;
 
+import com.backEndJavaSpring.Chatop_app.Dto.AuthRequest;
+import com.backEndJavaSpring.Chatop_app.Dto.AuthResponse;
 import com.backEndJavaSpring.Chatop_app.Dto.UserDto;
 import com.backEndJavaSpring.Chatop_app.Service.JwtUtil;
 import com.backEndJavaSpring.Chatop_app.Service.UserService;
@@ -34,10 +36,16 @@ public class UserController {
         return ResponseEntity.ok(new AuthResponse(token));
     }
     @PostMapping("auth/register")
-    public UserDto createUser(@RequestBody UserDto user) {
-        System.out.print(user.toString());
-        user.setPassword(encoder.encode(user.getPassword()));
-        return  s.addUser(user);
+    public ResponseEntity<AuthResponse> createUser(@RequestBody UserDto request) {
+        String email = request.getEmail();
+        request.setPassword(encoder.encode(email));
+                s.addUser(request);
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(request.getEmail(), email)
+        );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String token = jwtUtil.generateToken(request.getEmail());
+        return ResponseEntity.ok(new AuthResponse(token));
     }
     @GetMapping("auth/user/{id}")
     public ResponseEntity<UserDto> getUserById(@PathVariable Long id) {
@@ -54,17 +62,4 @@ public class UserController {
 
         return ResponseEntity.ok(user);
     }
-}
-@Getter
-@Setter
-class AuthRequest {
-    private String  email;
-    private String password;
-
-}
-
-class AuthResponse {
-    private String token;
-    public AuthResponse(String token) { this.token = token; }
-    public String getToken() { return token; }
 }

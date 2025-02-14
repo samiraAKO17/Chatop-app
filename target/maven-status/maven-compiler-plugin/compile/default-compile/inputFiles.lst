@@ -9,12 +9,15 @@ D:\Angular10\OC\Projet3\Chatop-app\src\main\java\com\backEndJavaSpring\Chatop_ap
 D:\Angular10\OC\Projet3\Chatop-app\src\main\java\com\backEndJavaSpring\Chatop_app\Entity\Message.java
 D:\Angular10\OC\Projet3\Chatop-app\src\main\java\com\backEndJavaSpring\Chatop_app\Entity\Rental.java
 D:\Angular10\OC\Projet3\Chatop-app\src\main\java\com\backEndJavaSpring\Chatop_app\Entity\User.java
+D:\Angular10\OC\Projet3\Chatop-app\src\main\java\com\backEndJavaSpring\Chatop_app\Filter\JwtAuthenticationFilter.java
 D:\Angular10\OC\Projet3\Chatop-app\src\main\java\com\backEndJavaSpring\Chatop_app\Mapper\MessageMapper.java
 D:\Angular10\OC\Projet3\Chatop-app\src\main\java\com\backEndJavaSpring\Chatop_app\Mapper\RentalMapper.java
 D:\Angular10\OC\Projet3\Chatop-app\src\main\java\com\backEndJavaSpring\Chatop_app\Mapper\UserMapper.java
 D:\Angular10\OC\Projet3\Chatop-app\src\main\java\com\backEndJavaSpring\Chatop_app\Repository\MessageRepository.java
 D:\Angular10\OC\Projet3\Chatop-app\src\main\java\com\backEndJavaSpring\Chatop_app\Repository\RentalRepository.java
 D:\Angular10\OC\Projet3\Chatop-app\src\main\java\com\backEndJavaSpring\Chatop_app\Repository\UserRepository.java
+D:\Angular10\OC\Projet3\Chatop-app\src\main\java\com\backEndJavaSpring\Chatop_app\Service\CustomUserDetailsService.java
+D:\Angular10\OC\Projet3\Chatop-app\src\main\java\com\backEndJavaSpring\Chatop_app\Service\JwtUtil.java
 D:\Angular10\OC\Projet3\Chatop-app\src\main\java\com\backEndJavaSpring\Chatop_app\Service\MessageService.java
 D:\Angular10\OC\Projet3\Chatop-app\src\main\java\com\backEndJavaSpring\Chatop_app\Service\MessageServiceImp.java
 D:\Angular10\OC\Projet3\Chatop-app\src\main\java\com\backEndJavaSpring\Chatop_app\Service\RentalService.java

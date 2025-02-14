@@ -17,9 +17,9 @@ public class Message {
     @Id
     @GeneratedValue
     private Long id;
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @ManyToOne
     private Rental rental;
-    @ManyToOne (fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @ManyToOne
     private User user;
     private String message;
     private LocalDateTime created_at;

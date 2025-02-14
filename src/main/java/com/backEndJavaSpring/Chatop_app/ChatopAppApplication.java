@@ -3,6 +3,7 @@ package com.backEndJavaSpring.Chatop_app;
 import com.backEndJavaSpring.Chatop_app.Dto.MessageDto;
 import com.backEndJavaSpring.Chatop_app.Dto.RentalDto;
 import com.backEndJavaSpring.Chatop_app.Dto.UserDto;
+import com.backEndJavaSpring.Chatop_app.Mapper.RentalMapper;
 import com.backEndJavaSpring.Chatop_app.Service.MessageService;
 import com.backEndJavaSpring.Chatop_app.Service.RentalService;
 import com.backEndJavaSpring.Chatop_app.Service.UserService;
@@ -26,6 +27,8 @@ public class ChatopAppApplication implements CommandLineRunner {
 	RentalService rentalService;
 	@Autowired
 	BCryptPasswordEncoder encoder;
+    @Autowired
+    private RentalMapper rentalMapper;
 
 	public static void main(String[] args) {
 		SpringApplication.run(ChatopAppApplication.class, args);
@@ -61,8 +64,8 @@ public class ChatopAppApplication implements CommandLineRunner {
 		message.setMessage("Hello I'm interested in ...");
 		UserDto user = new UserDto();
 		user= userService.getUserById(2L);
-		message.setUser(user);
-		message.setRental(rentalService.getRentalById(1L));
+		message.setUser_id(user.getId());
+		message.setRental_id(1L);
 		messageService.addMessage(message);
 
 	}
@@ -72,7 +75,7 @@ public class ChatopAppApplication implements CommandLineRunner {
 		rental.setName("T1 Boulogne");
 		UserDto user = new UserDto();
 		user= userService.getUserById(1L);
-		rental.setOwner(user);
+		rental.setOwner_id(user.getId());
 		rental.setPrice(750f);
 		rental.setSurface(24f);
 		rental.setDescription("T1 Boulogne");

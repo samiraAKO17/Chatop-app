@@ -7,8 +7,8 @@ import java.time.LocalDateTime;
 public class MessageDto {
 
     private Long id;
-    private RentalDto rental;
-    private UserDto user;
+    private Long rental_id;
+    private Long user_id;
     private String message;
     private LocalDateTime created_at;
     private LocalDateTime updated_at;

@@ -22,7 +22,7 @@ public class Rental {
     private Float price;
     private String picture;
     private String description;
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name = "owner_id")
     private User owner;
     private LocalDateTime created_at;
