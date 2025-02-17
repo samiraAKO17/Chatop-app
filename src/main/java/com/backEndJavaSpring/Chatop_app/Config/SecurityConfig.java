@@ -32,11 +32,11 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("api/auth/login").permitAll()
-                        .requestMatchers("api/auth/register").permitAll()
+                        .requestMatchers("/api/auth/login").permitAll()
+                        .requestMatchers("/api/auth/register").permitAll()
+                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui/index.html").permitAll()
                         // .requestMatchers("Rentals/**").authenticated() // Protéger les Rentals
-                       // .requestMatchers("Messages/**").authenticated() // Protéger les Rentals
-                        .anyRequest().authenticated()
+                        .anyRequest().authenticated() // protégent toutes les routes
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

@@ -16,7 +16,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.crypto.SecretKey;
 import java.util.Base64;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Info;
 
+@OpenAPIDefinition(info = @Info(title = "Chatop API", version = "1.0", description = "Documentation de l'API"))
 @SpringBootApplication
 public class ChatopAppApplication implements CommandLineRunner {
 	@Autowired
