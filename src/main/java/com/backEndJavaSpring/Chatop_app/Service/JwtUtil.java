@@ -3,6 +3,7 @@ package com.backEndJavaSpring.Chatop_app.Service;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import java.security.Key;
 import java.util.Date;
@@ -10,9 +11,10 @@ import java.util.function.Function;
 
 @Service
 public class JwtUtil {
-    private static final String SECRET_KEY = "mkznD8Szw7W8Mj4cSK4nSmYCbfX0Rlp2Xnp0b/Q8aIA="; // Remplace par une clé plus sécurisée
+    @Value("${jwt.secret}") // Injection de la clé secrète depuis application.properties
+    private String secretKey;
     private Key getSigningKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
+        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(keyBytes);
     }
     public String extractUsername(String token) {

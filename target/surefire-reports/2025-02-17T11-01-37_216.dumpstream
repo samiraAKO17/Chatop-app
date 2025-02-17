@@ -1,4 +1,4 @@
-# Created at 2025-02-17T10:00:49.377
+# Created at 2025-02-17T11:01:37.641
 Boot Manifest-JAR contains absolute paths in classpath 'D:\Angular10\OC\Projet3\Chatop-app\target\test-classes'
 Hint: <argLine>-Djdk.net.URLClassPath.disableClassPathURLCheck=true</argLine>
 'other' has different root
