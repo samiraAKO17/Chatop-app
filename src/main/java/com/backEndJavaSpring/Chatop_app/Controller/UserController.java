@@ -38,7 +38,7 @@ public class UserController {
     @PostMapping("auth/register")
     public ResponseEntity<AuthResponse> createUser(@RequestBody UserDto request) {
         String email = request.getEmail();
-        request.setPassword(encoder.encode(email));
+        request.setPassword(encoder.encode(request.getPassword()));
                 s.addUser(request);
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getEmail(), email)
