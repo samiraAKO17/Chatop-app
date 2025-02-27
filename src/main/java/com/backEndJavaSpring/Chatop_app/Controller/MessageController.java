@@ -25,7 +25,7 @@ public class MessageController {
     private UserService userService;
 
     @PostMapping("messages")
-    public ResponseEntity<MessageSuccess> createUser(@RequestBody MessageDto message) {
+    public ResponseEntity<MessageSuccess > createUser(@RequestBody MessageDto message) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
         UserDto user = userService.getUserByEmail(email);
