@@ -1,10 +1,13 @@
 package com.backEndJavaSpring.Chatop_app.Service;
 
 import com.backEndJavaSpring.Chatop_app.Dto.MessageDto;
-import com.backEndJavaSpring.Chatop_app.Entity.Message;
+import com.backEndJavaSpring.Chatop_app.Dto.MessageResponse;
+import com.backEndJavaSpring.Chatop_app.Dto.UserDto;
 import com.backEndJavaSpring.Chatop_app.Mapper.MessageMapper;
 import com.backEndJavaSpring.Chatop_app.Repository.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +19,8 @@ public class MessageServiceImp implements MessageService {
     private MessageRepository messageRepository;
     @Autowired
     private MessageMapper messageMapper;
+    @Autowired
+    private UserService userService;
     @Override
     public List<MessageDto> messages() {
         return messageRepository.findAll()
@@ -25,8 +30,13 @@ public class MessageServiceImp implements MessageService {
     }
 
     @Override
-    public MessageDto addMessage(MessageDto message) {
-        return messageMapper.toDto(messageRepository.save(messageMapper.toEntity(message)));
+    public MessageResponse addMessage(MessageDto message) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        UserDto user = userService.getUserByEmail(email);
+        message.setUser_id(user.getId());
+        messageRepository.save(messageMapper.toEntity(message));
+        return new MessageResponse("Message send with success");
     }
 
     @Override
