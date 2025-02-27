@@ -6,7 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
-public class RentalForm {
+public class RentalRequest {
     //  @NotNull
     private String name;
     private Float surface;

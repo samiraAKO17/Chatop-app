@@ -82,7 +82,7 @@ public class ChatopAppApplication implements CommandLineRunner {
 		rental.setPrice(750f);
 		rental.setSurface(24f);
 		rental.setDescription("T1 Boulogne");
-		rentalService.addRental(rental);
+		//rentalService.addRental(rental);
 	}
 
 

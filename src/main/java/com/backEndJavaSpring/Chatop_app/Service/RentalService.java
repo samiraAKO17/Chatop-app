@@ -1,13 +1,14 @@
 package com.backEndJavaSpring.Chatop_app.Service;
 
 import com.backEndJavaSpring.Chatop_app.Dto.RentalDto;
+import com.backEndJavaSpring.Chatop_app.Dto.RentalRequest;
 
 import java.util.List;
 
 public interface RentalService {
     List<RentalDto> rentals();
-    RentalDto addRental (RentalDto rental);
-    RentalDto updateRental (RentalDto rental);
+    RentalDto addRental (RentalRequest rental);
+    RentalDto updateRental (RentalRequest rental, Long id);
     void deleteRental (RentalDto rental);
     RentalDto getRentalById(Long id);
 }

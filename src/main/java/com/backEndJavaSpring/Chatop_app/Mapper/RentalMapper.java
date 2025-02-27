@@ -2,6 +2,7 @@ package com.backEndJavaSpring.Chatop_app.Mapper;
 
 
 import com.backEndJavaSpring.Chatop_app.Dto.RentalDto;
+import com.backEndJavaSpring.Chatop_app.Dto.RentalRequest;
 import com.backEndJavaSpring.Chatop_app.Entity.Rental;
 import com.backEndJavaSpring.Chatop_app.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,5 +42,14 @@ public class RentalMapper {
         rental.setCreated_at(dto.getCreated_at());
         rental.setUpdated_at(dto.getUpdated_at());
         return rental;
+    }
+
+    public RentalDto rentalDto(RentalRequest request){
+        RentalDto dto = new RentalDto();
+        dto.setName(request.getName());
+        dto.setSurface(request.getSurface());
+        dto.setPrice(request.getPrice());
+        dto.setDescription(request.getDescription());
+        return dto;
     }
 }
