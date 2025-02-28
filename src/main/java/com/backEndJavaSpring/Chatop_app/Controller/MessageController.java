@@ -3,6 +3,7 @@ package com.backEndJavaSpring.Chatop_app.Controller;
 import com.backEndJavaSpring.Chatop_app.Dto.MessageDto;
 import com.backEndJavaSpring.Chatop_app.Dto.MessageResponse;
 import com.backEndJavaSpring.Chatop_app.Dto.UserDto;
+import com.backEndJavaSpring.Chatop_app.Exception.ResourceNotFoundException;
 import com.backEndJavaSpring.Chatop_app.Service.MessageService;
 import com.backEndJavaSpring.Chatop_app.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,16 +21,12 @@ public class MessageController {
 
     @PostMapping("messages")
     public ResponseEntity<MessageResponse> createUser(@RequestBody MessageDto message) {
-        try {
-            return ResponseEntity.ok(s.addMessage(message));
-        }catch (Exception e){
-            return ResponseEntity.badRequest().body(new MessageResponse());
+
+        MessageResponse response = s.addMessage(message);
+        if (response == null) {
+            throw new ResourceNotFoundException("");
         }
-    }
-    @GetMapping("messages/{id}")
-    public MessageDto getMessage(@PathVariable Long id) {
-        System.out.print(id);
-        MessageDto messageDto= s.getMessageById(id);
-        return messageDto;
+        return ResponseEntity.ok(response);
+
     }
 }
