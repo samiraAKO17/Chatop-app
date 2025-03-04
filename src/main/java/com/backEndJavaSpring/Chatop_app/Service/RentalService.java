@@ -9,6 +9,5 @@ public interface RentalService {
     List<RentalDto> rentals();
     RentalDto addRental (RentalRequest rental);
     RentalDto updateRental (RentalRequest rental, Long id);
-    void deleteRental (RentalDto rental);
     RentalDto getRentalById(Long id);
 }

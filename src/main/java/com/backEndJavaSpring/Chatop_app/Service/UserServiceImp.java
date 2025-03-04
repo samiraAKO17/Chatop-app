@@ -4,21 +4,17 @@ import com.backEndJavaSpring.Chatop_app.Dto.AuthRequest;
 import com.backEndJavaSpring.Chatop_app.Dto.AuthResponse;
 import com.backEndJavaSpring.Chatop_app.Dto.UserDto;
 import com.backEndJavaSpring.Chatop_app.Entity.User;
+import com.backEndJavaSpring.Chatop_app.Exception.ResourceNotFoundException;
+import com.backEndJavaSpring.Chatop_app.Exception.UnauthorizedException;
 import com.backEndJavaSpring.Chatop_app.Mapper.UserMapper;
-import com.backEndJavaSpring.Chatop_app.Repository.RentalRepository;
 import com.backEndJavaSpring.Chatop_app.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImp implements UserService {
@@ -31,20 +27,14 @@ public class UserServiceImp implements UserService {
     @Autowired
     BCryptPasswordEncoder encoder;
     @Autowired
-    private RentalRepository rentalRepository;
-    @Autowired
     private AuthenticationManager authenticationManager;
 
     @Override
-    public List<UserDto> users() {
-        return userRepository.findAll()
-                .stream()
-                .map(userMapper::toDto)
-                .collect(Collectors.toList());
-    }
-
-    @Override
     public AuthResponse addUser(UserDto user) {
+        // Vérifier si l'utilisateur existe déjà
+        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
+            throw new UnauthorizedException("user already exist");
+        }
         UserDto dto = new UserDto();
         String email = user.getEmail();
         dto.setPassword(encoder.encode(user.getPassword()));
@@ -61,33 +51,31 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public UserDto updateUser(UserDto user) {
-        return userMapper.toDto(userRepository.save(userMapper.toEntity(user)));
-    }
-
-    @Override
-    public void deleteUser(UserDto user) {
-        userRepository.delete(userMapper.toEntity(user));
-    }
-
-    @Override
     public UserDto getUserById(Long id) {
-       User  s = userRepository.findById(id).orElse(null);
-        return userMapper.toDto(s);
-    }
-
-    @Override
-    public UserDto getUserByLoginAndPass(String login, String pass) {
-        return null;
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("user not found with ID : " + id));
+        return userMapper.toDto(user);
     }
 
     @Override
     public UserDto getUserByEmail(String email) {
-        UserDto dto = null;
-        Optional<User> user =userRepository.findByEmail(email);
-        if(user.isPresent())
-        dto = userMapper.toDto(user.get());
-        return dto;
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("user not found : " + email));
+        return userMapper.toDto(user);
+    }
+
+    @Override
+    public AuthResponse loginUser(AuthRequest authRequest) {
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword())
+            );
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            String token = jwtUtil.generateToken(authRequest.getEmail());
+            return new AuthResponse(token);
+        } catch (Exception ex) {
+            throw new UnauthorizedException("Échec de l'authentification. Vérifiez vos identifiants.");
+        }
     }
 
     @Override
@@ -95,17 +83,14 @@ public class UserServiceImp implements UserService {
         // Récupérer l'email de l'utilisateur connecté depuis le SecurityContext
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName(); // Le nom correspond à l'email ici
-        // Récupérer les informations de l'utilisateur à partir du service
+        // Récupérer les informations de l'utilisateur
         return getUserByEmail(email);
     }
 
     @Override
-    public AuthResponse loginUser(AuthRequest authRequest) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword())
-        );
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String token = jwtUtil.generateToken(authRequest.getEmail());
-        return new AuthResponse(token);
+    public UserDto getUserByLoginAndPass(String login, String pass) {
+
+        return null;
     }
+
 }
